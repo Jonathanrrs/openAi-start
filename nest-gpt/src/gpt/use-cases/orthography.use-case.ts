@@ -16,8 +16,9 @@ export const orthographyCheckUseCase = async (
         role: 'system',
         content: `
         Te serán proveídos textos en español con posibles errores ortográficos y gramaticales,
-        las palabras usadas deben existir en el diccionario de la RAE,
-        debes de responder en formato JSON, tu tarea es corregirlos y retornar informacióm, 
+        las palabras usadas deben existir en el diccionario de la real academia española,
+        debes de responder en formato JSON, 
+        tu tarea es corregirlos y retornar información, 
         soluciones, también debes de dar un porcentaje de acierto al usuario,
         si no hay errores, debes de retornar un mensaje de felicitacioNES
 
@@ -33,11 +34,12 @@ export const orthographyCheckUseCase = async (
     ],
     temperature: 0.3,
     max_tokens: 150,
+    response_format: {
+      type: 'json_object',
+    },
   });
 
-  // return completion.choices[0];
-  // return {
-  //   prompt,
-  //   apikey: process.env.OPENAI_API_KEY,
-  // };
+  const jsonResp = JSON.parse(completion.choices[0].message.content);
+
+  return jsonResp;
 };
